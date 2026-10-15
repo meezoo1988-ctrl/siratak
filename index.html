@@ -314,6 +314,7 @@ footer{padding-block:30px;color:var(--muted);font-size:14px;text-align:center}
         </div>
         <div class="pay-head"><span class="step-n">2</span><b>أرسل الطلب وإيصال التحويل على الإيميل</b></div>
         <div class="mailrow"><span class="contact" id="mail"></span><button class="btn btn-ghost small" type="button" id="copymail">انسخ الإيميل</button></div>
+        <div class="mailrow"><div class="kv"><span>عنوان الإيميل</span><b id="subj">طلب سيرة ذاتية</b></div><button class="btn btn-ghost small" type="button" id="copysubj">انسخ العنوان</button></div>
         <p class="note" style="margin:0">الصق نص الطلب في الإيميل، وأرفق صورة الإيصال<span id="cvnote"> وملف سيرتك</span>. نبدأ الكتابة أول ما نستلمه، وتوصلك ملفاتك خلال 24 ساعة.</p>
       </div>
       <p class="note" id="paynote">بعد ما تنسخ نص الطلب، تظهر لك بيانات التحويل والإيميل.</p>
@@ -377,6 +378,7 @@ function copyBtn(btnId, srcId, value, label){
 }
 copyBtn('copymail','mail',()=>EMAIL,"انسخ الإيميل");
 copyBtn('copyiban','iban',()=>$('iban').textContent.replace(/\s/g,''),"انسخ الآيبان");
+copyBtn('copysubj','subj',()=>$('subj').textContent,"انسخ العنوان");
 $('copy').addEventListener('click', ()=>{
   $('cvnote').hidden = !$('m-fix').checked;
   $('pay').hidden = false; $('paynote').hidden = true;
