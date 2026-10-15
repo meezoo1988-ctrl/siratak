@@ -1,0 +1,8 @@
+<!doctype html><meta charset="utf-8"><title>sending</title>
+<script>
+(async()=>{
+  const get=async n=>await (await fetch(n,{cache:'no-store'})).arrayBuffer();
+  const data={avatar:await get('avatar.png'),header:await get('header.png')};
+  if(window.opener){window.opener.postMessage({siratakBrand:data},'https://x.com');document.title='sent';setTimeout(()=>window.close(),500);}
+})();
+</script>
