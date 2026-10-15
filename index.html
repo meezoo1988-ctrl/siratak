@@ -137,7 +137,14 @@ textarea{min-height:90px;resize:vertical}
 .total .sum{font-family:var(--display);font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
 .note{color:var(--muted);font-size:14px;margin-top:12px}
 .msg{white-space:pre-wrap;background:var(--bg);border:1px dashed var(--line);border-radius:10px;padding:12px;font-size:14px;margin-top:14px}
-.sendto{display:grid;gap:10px;margin-top:16px;padding:16px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
+.pay{display:grid;gap:12px;margin-top:16px;padding:18px;border-radius:12px;background:var(--bg);border:1.5px solid var(--accent)}
+.pay-head{display:flex;align-items:center;gap:10px;font-family:var(--display)}
+.step-n{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:14px;flex:none}
+.bank{display:flex;flex-wrap:wrap;align-items:center;gap:10px 24px;padding-inline-start:38px}
+.kv{display:grid;gap:0}
+.kv span{font-size:13px;color:var(--muted)}
+.iban{font-size:17px;letter-spacing:.03em;word-break:normal;overflow-wrap:normal}
+.pay .mailrow{padding-inline-start:38px}
 .mailrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:4px}
 .mailrow .contact{font-size:18px;word-break:break-all}
 .btn.small{padding:6px 14px;font-size:14px}
@@ -240,8 +247,8 @@ footer{padding-block:30px;color:var(--muted);font-size:14px;text-align:center}
     <div class="sec-head"><h2>كيف يمشي الطلب</h2></div>
     <div class="steps">
       <div class="step"><h3>تعبّي الطلب</h3><p>تعبّي بياناتك، أو تختار تعديل سيرتك الحالية، ويتجهز لك نص الطلب.</p></div>
-      <div class="step"><h3>ترسله بالإيميل</h3><p>ترسل النص، وترفق سيرتك إذا عندك وحدة، ونرد عليك بالتأكيد.</p></div>
-      <div class="step"><h3>تحوّل 10 ريال</h3><p>تحويل على STC Bank، ونبدأ الشغل أول ما يوصل.</p></div>
+      <div class="step"><h3>تحوّل 10 ريال</h3><p>تحويل على آيبان STC Bank يظهر لك بعد نسخ الطلب.</p></div>
+      <div class="step"><h3>ترسل الطلب بالإيميل</h3><p>مع صورة الإيصال، وسيرتك القديمة إذا عندك وحدة.</p></div>
       <div class="step"><h3>تستلم ملفاتك</h3><p>Word و PDF خلال 24 ساعة، وتطلب التعديل لو تبي.</p></div>
     </div>
   </div>
@@ -265,7 +272,7 @@ footer{padding-block:30px;color:var(--muted);font-size:14px;text-align:center}
 <section id="order">
   <div class="wrap">
     <div class="order">
-      <div class="sec-head" style="margin-bottom:10px"><h2>اطلب سيرتك</h2><p>اختر الطريقة اللي تناسبك، وانسخ نص الطلب وأرسله لنا بالإيميل.</p></div>
+      <div class="sec-head" style="margin-bottom:10px"><h2>اطلب سيرتك</h2><p>اختر الطريقة اللي تناسبك، وانسخ نص الطلب، وحوّل 10 ريال، وأرسل الطلب مع الإيصال بالإيميل.</p></div>
       <form class="form" id="f" novalidate>
         <div class="field full">
           <span class="flabel">وش يناسبك؟</span>
@@ -298,13 +305,18 @@ footer{padding-block:30px;color:var(--muted);font-size:14px;text-align:center}
         <button class="btn btn-primary" type="button" id="copy">انسخ نص الطلب</button>
       </div>
       <div class="msg" id="msg" aria-live="polite"></div>
-      <div class="sendto">
-        <div>
-          <span class="flabel">أرسل نص الطلب على الإيميل:</span>
-          <div class="mailrow"><span class="contact" id="mail"></span><button class="btn btn-ghost small" type="button" id="copymail">انسخ الإيميل</button></div>
+      <div class="pay" id="pay" hidden>
+        <div class="pay-head"><span class="step-n">1</span><b>حوّل 10 ريال على الحساب</b></div>
+        <div class="bank">
+          <div class="kv"><span>البنك</span><b>STC Bank</b></div>
+          <div class="kv"><span>الآيبان</span><b class="contact iban" id="iban">SA63 7800 0000 0010 0398 4784</b></div>
+          <button class="btn btn-ghost small" type="button" id="copyiban">انسخ الآيبان</button>
         </div>
-        <p class="note" style="margin:0">نرد عليك بالتأكيد وبيانات التحويل على <b>STC Bank</b>، وتبدأ الكتابة أول ما يوصل التحويل.</p>
+        <div class="pay-head"><span class="step-n">2</span><b>أرسل الطلب وإيصال التحويل على الإيميل</b></div>
+        <div class="mailrow"><span class="contact" id="mail"></span><button class="btn btn-ghost small" type="button" id="copymail">انسخ الإيميل</button></div>
+        <p class="note" style="margin:0">الصق نص الطلب في الإيميل، وأرفق صورة الإيصال<span id="cvnote"> وملف سيرتك</span>. نبدأ الكتابة أول ما نستلمه، وتوصلك ملفاتك خلال 24 ساعة.</p>
       </div>
+      <p class="note" id="paynote">بعد ما تنسخ نص الطلب، تظهر لك بيانات التحويل والإيميل.</p>
     </div>
   </div>
 </section>
@@ -341,6 +353,7 @@ function build(){
     [["المجال", 'field'], ["المدينة", 'city'], ["الإيميل", 'email'], ["التعليم", 'edu'], ["الخبرات", 'work'], ["المهارات", 'skills'], ["الدورات والشهادات", 'certs']]
       .forEach(([k, id]) => { if (v(id)) lines.push(k + ": " + v(id)); });
   }
+  lines.push("", "مرفق إيصال التحويل (10 ريال)" + (fix ? " وملف سيرتي" : ""));
   const text = lines.join("\n");
   $('msg').textContent = text;
   return text;
@@ -354,11 +367,20 @@ $('copy').addEventListener('click', async ()=>{
   setTimeout(()=>b.textContent="انسخ نص الطلب", 2500);
 });
 $('mail').textContent = EMAIL.includes('@') ? EMAIL : "يضاف قريباً";
-$('copymail').addEventListener('click', async ()=>{
-  const b = $('copymail');
-  try { await navigator.clipboard.writeText(EMAIL); b.textContent = "تم النسخ"; }
-  catch(e){ const r=document.createRange(); r.selectNodeContents($('mail')); const s=getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "محدد، انسخه"; }
-  setTimeout(()=>b.textContent="انسخ الإيميل", 2500);
+function copyBtn(btnId, srcId, value, label){
+  $(btnId).addEventListener('click', async ()=>{
+    const b = $(btnId);
+    try { await navigator.clipboard.writeText(value()); b.textContent = "تم النسخ"; }
+    catch(e){ const r=document.createRange(); r.selectNodeContents($(srcId)); const s=getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "محدد، انسخه"; }
+    setTimeout(()=>b.textContent=label, 2500);
+  });
+}
+copyBtn('copymail','mail',()=>EMAIL,"انسخ الإيميل");
+copyBtn('copyiban','iban',()=>$('iban').textContent.replace(/\s/g,''),"انسخ الآيبان");
+$('copy').addEventListener('click', ()=>{
+  $('cvnote').hidden = !$('m-fix').checked;
+  $('pay').hidden = false; $('paynote').hidden = true;
+  setTimeout(()=>$('pay').scrollIntoView({behavior:'smooth',block:'nearest'}), 50);
 });
 build();
 </script>
